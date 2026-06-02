@@ -1,0 +1,427 @@
+/* --- GLOBAL THEME SYSTEM VALUES --- */
+body {
+    background: #05050a;
+    color: #fff;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+#ui { 
+    text-align: center; 
+    margin-bottom: 20px; 
+}
+
+h1 { 
+    font-size: 3rem; 
+    margin: 0; 
+    letter-spacing: 4px; 
+    color: #ff0055; 
+    text-shadow: 0 0 20px rgba(255, 0, 85, 0.5); 
+}
+
+#stats-row { 
+    display: flex; 
+    gap: 15px; 
+    justify-content: center; 
+    margin-top: 10px; 
+}
+
+.stat { 
+    font-size: 1.1rem; 
+    background: #111122; 
+    padding: 8px 15px; 
+    border-radius: 12px; 
+    border: 2px solid #333344; 
+    min-width: 100px; 
+}
+
+/* --- THE BOUNDING HOUSING BOX FOR CANVAS + MODALS --- */
+#game-wrapper { 
+    position: relative;
+    background: #111122; 
+    padding: 10px; 
+    border-radius: 15px; 
+    border: 5px solid #222233; 
+    display: inline-block;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+canvas { 
+    background: #000; 
+    border-radius: 5px; 
+    display: block;
+}
+
+/* --- SYSTEM MANAGEMENT FRAMEWORK CLASSES --- */
+.hidden { 
+    display: none !important; 
+}
+
+/* --- UNIFIED ABSOLUTE OVERLAY SYSTEM --- */
+.overlay-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+/* Frosted overlay effect specifically tuned for pausing text displays */
+.overlay-modal.frosted {
+    background-color: rgba(10, 10, 20, 0.65);
+    backdrop-filter: blur(8px);
+}
+
+/* --- CENTRALIZED MENU PANEL CARDS --- */
+.modal-content {
+    position: relative;
+    background: linear-gradient(160deg, #14142a 0%, #0b0b16 60%, #0a0a14 100%);
+    border: 3px solid transparent;
+    border-radius: 22px;
+    padding: 40px 36px;
+    text-align: center;
+    width: 320px;
+    box-shadow:
+        0 0 0 1px rgba(255, 0, 85, 0.2),
+        0 0 50px rgba(255, 0, 85, 0.35),
+        0 25px 60px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    animation: modal-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+               modal-float 6s ease-in-out infinite 0.5s;
+    overflow: hidden;
+}
+
+/* Animated rainbow gradient border ring */
+.modal-content::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 22px;
+    padding: 3px;
+    background: conic-gradient(from 0deg,
+        #ff0055, #ff8800, #ffee00, #00ff88,
+        #30a0ff, #b066ff, #ff0055);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: ring-spin 6s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Soft inner sheen that drifts across the card */
+.modal-content::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 70%);
+    background-size: 250% 250%;
+    animation: sheen-drift 5s ease-in-out infinite;
+    pointer-events: none;
+    border-radius: 22px;
+}
+
+.modal-content > * {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes modal-pop {
+    0%   { transform: scale(0.7) translateY(20px); opacity: 0; }
+    60%  { transform: scale(1.04) translateY(-4px); opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes modal-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+@keyframes ring-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes sheen-drift {
+    0%, 100% { background-position: 200% 0%; }
+    50%      { background-position: -50% 0%; }
+}
+
+.modal-content h1,
+.modal-content h2 {
+    font-size: 2.4rem;
+    margin: 0 0 12px;
+    background: linear-gradient(90deg, #ff0055, #ff8800, #ffee00, #00ff88, #30a0ff, #ff0055);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.5));
+    animation: title-shimmer 4s linear infinite,
+               title-bob 3s ease-in-out infinite;
+    letter-spacing: 3px;
+}
+
+@keyframes title-shimmer {
+    to { background-position: 300% 0%; }
+}
+
+@keyframes title-bob {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-3px) scale(1.02); }
+}
+
+.modal-content p { 
+    color: #9999bb;
+    margin-bottom: 28px; 
+    font-size: 1rem; 
+    line-height: 1.5;
+    animation: fade-up 0.6s ease-out 0.2s both;
+}
+
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Game Over Header Text Modification Styles */
+#end-title {
+    margin: 0 0 10px 0;
+}
+
+#end-score {
+    color: #00FF88;
+    font-size: 1.4rem;
+    text-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+    animation: score-pulse 1.5s ease-in-out infinite;
+    display: inline-block;
+}
+
+@keyframes score-pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+}
+
+/* Pause Menu Specific Layout Overrides */
+.context-pause h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+/* --- GENERAL REUSABLE INTERACTIVE CONTROLS --- */
+button {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 14px 0;
+    background: linear-gradient(145deg, #1d1d3a, #131326);
+    color: #fff;
+    border: 2px solid #333355;
+    border-radius: 14px;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+        transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+    animation: btn-enter 0.5s ease-out both;
+}
+
+.modal-content button:nth-of-type(1) { animation-delay: 0.25s; }
+.modal-content button:nth-of-type(2) { animation-delay: 0.4s; }
+.modal-content button:nth-of-type(3) { animation-delay: 0.55s; }
+
+@keyframes btn-enter {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Shimmer sweep across the button */
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent);
+    transform: skewX(-25deg);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+button:hover {
+    background: linear-gradient(145deg, #ff0055, #c4003f);
+    border-color: #ff88aa;
+    box-shadow:
+        0 0 20px rgba(255, 0, 85, 0.7),
+        0 6px 20px rgba(255, 0, 85, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.04);
+}
+
+button:hover::before {
+    left: 125%;
+}
+
+button:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+}
+
+/* Dangerous operations buttons overrides (Exit to Menu) */
+button.danger {
+    background: linear-gradient(145deg, #2a1122, #1a0816);
+    border-color: #66223a;
+}
+
+button.danger:hover {
+    background: linear-gradient(145deg, #ff0055, #aa0033);
+    border-color: #ff88aa;
+}
+
+/* --- CINEMATIC ARCADE TRANSITIONS ELEMENTS --- */
+
+/* Solid deep black curtain fade background */
+.overlay-modal.solid-black {
+    background: #030308;
+    z-index: 200; 
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* Absolute positioning layout anchor to pin loader strictly down to bottom right */
+.loading-widget-container {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Mini arcade board frame — swings 90° each way, then back to upright */
+.mini-loading-board-frame {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 3px solid #ff0055;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+    transform-origin: 50% 50%;
+    animation: mini-board-swing 5s ease-in-out infinite;
+}
+
+@keyframes mini-board-swing {
+    0%,  8%   { transform: rotate(0deg); }       /* rest, puyos on bottom */
+    20%       { transform: rotate(90deg); }      /* spin CW */
+    35%       { transform: rotate(90deg); }      /* HOLD — puyos stuck on wall */
+    48%       { transform: rotate(0deg); }       /* fall back to original */
+    55%       { transform: rotate(0deg); }
+    68%       { transform: rotate(-90deg); }     /* spin CCW */
+    82%       { transform: rotate(-90deg); }     /* HOLD — puyos stuck on other wall */
+    95%       { transform: rotate(0deg); }       /* fall back to original */
+    100%      { transform: rotate(0deg); }
+}
+
+/*
+ * Puyos sit on the bottom of the board (local +y edge) the whole time.
+ * They ride the board's rotation (stick to whatever wall it spins to),
+ * and "fall back" simply by riding the board's reverse swing. A short
+ * squish on landing sells the impact.
+ */
+.mini-puyo {
+    --x: 0px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    will-change: transform;
+    animation: puyo-land 5s ease-in-out infinite;
+}
+
+.mini-puyo.c1 { --x: 2px;  background: #ff0055; }
+.mini-puyo.c2 { --x: 16px; background: #00ff88; }
+.mini-puyo.c3 { --x: 30px; background: #30a0ff; }
+
+@keyframes puyo-land {
+    0%,  45%  { transform: translate(var(--x), 32px); }
+    49%       { transform: translate(var(--x), 32px) scale(1.2, 0.8); }   /* landing squish */
+    53%, 92%  { transform: translate(var(--x), 32px); }
+    96%       { transform: translate(var(--x), 32px) scale(1.2, 0.8); }   /* landing squish */
+    100%      { transform: translate(var(--x), 32px); }
+}
+/* Countdown overlay transparency base */
+.overlay-modal.transparent {
+    background: transparent;
+    z-index: 250;
+}
+
+/* Arcade announcement text (READY... SET... PUYO!!!) */
+#announcement-text {
+    font-size: 4rem;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    letter-spacing: 4px;
+    text-align: center;
+    animation: text-blast-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Pulse trigger class for countdown phrases */
+.trigger-pulse-text {
+    animation: text-blast-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Loading text widget styling */
+.loading-text-string {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: #ff0055;
+    text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+}
+
+/* Animated loading dots */
+.loading-text-string span {
+    animation: loading-dot-fade 1.2s ease-in-out infinite;
+}
+.loading-text-string span:nth-child(1) { animation-delay: 0s; }
+.loading-text-string span:nth-child(2) { animation-delay: 0.2s; }
+.loading-text-string span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Aligned the fading dot curves so it loops cleanly */
+@keyframes loading-dot-fade {
+    0%, 100% { opacity: 0.2; }
+    50%      { opacity: 1; }
+}
+
+@keyframes text-blast-pop {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gravity Puyo: Hard Mode</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="features.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Game UI Elements -->
+    <div id="ui" class="hidden">
+        <h1>GRAVITY PUYO</h1>
+        <div id="stats-row">
+            <div class="stat">SCORE: <span id="score">0</span></div>
+            <div class="stat">FLIP: <span id="timer">10</span></div>
+            <div class="stat">QUOTA: <span id="quota">0</span>/8</div>
+        </div>
+    </div>
+
+    <!-- Centered Visual Stage Anchor -->
+    <div id="game-wrapper">
+        <!-- 1. The Dynamic Rendering Surface -->
+        <canvas id="gameCanvas" width="500" height="500"></canvas>
+
+        <!-- 2. Main Menu Component Overlay -->
+        <div id="menu-overlay" class="overlay-modal">
+            <div class="modal-content">
+                <h1>GRAVITY PUYO</h1>
+                <p>Survive the 90° gravity shifts or clear the block quotas!</p>
+                <button id="normal-mode-btn">NORMAL MODE</button>
+                <button id="split-mode-btn">SPLIT MODE</button>
+            </div>
+        </div>
+
+        <!-- 3. Intermediary Pause Modal Overlay -->
+        <div id="pause-overlay" class="hidden overlay-modal frosted">
+            <div class="modal-content context-pause">
+                <h2>GAME PAUSED</h2>
+                <button id="resume-game-btn">RESUME GAME</button>
+                <button id="exit-game-btn" class="danger">EXIT TO MENU</button>
+            </div>
+        </div>
+
+        <!-- 4. Game Over Terminal State Overlay -->
+        <div id="game-over-overlay" class="hidden overlay-modal">
+            <div class="modal-content">
+                <h2 id="end-title">GAME OVER</h2>
+                <p>Final Score: <span id="end-score">0</span></p>
+                <button id="back-to-menu-btn">MAIN MENU</button>
+            </div>
+        </div>
+
+        <!-- 5. CINEMATIC OVERLAY: GAMEY LOADING SCREEN -->
+        <div id="loading-overlay" class="hidden overlay-modal solid-black">
+            <div class="loading-widget-container">
+                <div class="mini-loading-board-frame">
+                    <div class="mini-puyo c1"></div>
+                    <div class="mini-puyo c2"></div>
+                    <div class="mini-puyo c3"></div>
+                </div>
+                <!-- FIXED: Structured layout nodes to support the seamless dot fade timing delays -->
+                <div class="loading-text-string">
+                    LOADING
+                    <div style="width: 20px; display: inline-block; text-align: left; margin-left: 2px;">
+                        <span>.</span><span>.</span><span>.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. CINEMATIC OVERLAY: ARCADE READY ANNOUNCEMENT -->
+        <div id="countdown-overlay" class="hidden overlay-modal transparent">
+            <div id="announcement-text">READY?</div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="features.js"></script>
+</body>
+</html>

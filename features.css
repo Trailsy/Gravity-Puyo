@@ -1,0 +1,82 @@
+/* ===== Added features styling ===== */
+
+/* Daily mode button + settings gear */
+#daily-mode-btn { margin-top: 12px; }
+
+#settings-gear {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #1d1d3a, #131326);
+  border: 2px solid #333355;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 600;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+#settings-gear:hover {
+  transform: rotate(45deg) scale(1.08);
+  border-color: #ff88aa;
+  box-shadow: 0 0 18px rgba(255,0,85,0.5);
+}
+
+/* Settings modal */
+#settings-overlay { display: none; }
+#settings-overlay.show { display: flex; }
+#settings-overlay .modal-content { width: 360px; max-width: 90vw; }
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin: 14px 0;
+  font-size: 0.9rem; letter-spacing: 1px;
+}
+.setting-row label { color: #ccd; }
+.setting-row input[type=range] { width: 140px; accent-color: #ff0055; }
+.setting-row .toggle {
+  position: relative;
+  width: 50px; height: 26px;
+  background: #222244; border-radius: 13px; cursor: pointer;
+  transition: background .2s;
+}
+.setting-row .toggle::after {
+  content: ''; position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fff;
+  transition: transform .2s;
+}
+.setting-row .toggle.on { background: linear-gradient(90deg, #ff0055, #ff8800); }
+.setting-row .toggle.on::after { transform: translateX(24px); }
+
+/* Mobile touch hint */
+#touch-hint {
+  position: fixed; bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,10,20,0.85);
+  color: #ff88aa; padding: 8px 14px;
+  border-radius: 10px; font-size: 0.75rem; letter-spacing: 1px;
+  z-index: 400; pointer-events: none;
+  border: 1px solid rgba(255,0,85,0.4);
+  display: none;
+}
+@media (hover: none) and (pointer: coarse) {
+  #touch-hint.show { display: block; animation: fade-out-hint 4s ease-out forwards; }
+}
+@keyframes fade-out-hint {
+  0%, 60% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Daily badge above stats */
+#daily-badge {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #ffcc00;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(255,204,0,0.5);
+}
